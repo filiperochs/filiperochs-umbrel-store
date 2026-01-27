@@ -8,7 +8,8 @@ tagline: API de WhatsApp e integrações para negócios e automação
 icon: https://i.imgur.com/E7BL0Ko.png
 category: Development
 version: "1.0.0"
-port: 8090
+# Porta interna da Evolution API; deve coincidir com SERVER_PORT no docker-compose (8080)
+port: 8080
 description: >-
   Evolution API v2 é uma plataforma para integração com WhatsApp e outros serviços.
   Inclui PostgreSQL e Redis pré-configurados.
