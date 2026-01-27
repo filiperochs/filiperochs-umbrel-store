@@ -1,28 +1,39 @@
+# Manifest Evolution API para Umbrel Community App Store
+# Documentação Evolution API: https://doc.evolution-api.com/v2/pt/get-started/introduction
+
 manifestVersion: 1
 id: filiperochs-evolution-api
 name: Evolution API
-tagline: Replace this tagline with your app's tagline
+tagline: API de WhatsApp e integrações para negócios e automação
 icon: https://i.imgur.com/E7BL0Ko.png
 category: Development
 version: "1.0.0"
 port: 8090
 description: >-
-  Add your app's description here.
+  Evolution API v2 é uma plataforma para integração com WhatsApp e outros serviços.
+  Inclui PostgreSQL e Redis pré-configurados.
 
+  Após instalar, acesse a interface e use a API Key padrão para testes.
+  Em produção, altere a chave em EVOLUTION_API_KEY (arquivo .env na pasta do app)
+  ou edite o docker-compose.yml.
 
-  You can also add newlines!
+  Documentação da API: https://doc.evolution-api.com/v2/pt/definitions/connections
+  Coleção Postman: https://www.postman.com/agenciadgcode/evolution-api/collection/gqr041s/evolution-api-v2-0
 
-developer: Filipe
-website: https://filiperocha.dev
+developer: Evolution API Team / Filipe
+website: https://doc.evolution-api.com
 submitter: Filipe
 submission: https://github.com/filiperochs/filiperochs-umbrel-store
-repo: https://github.com/filiperochs/filiperochs-umbrel-store
-support: https://github.com/filiperochs/filiperochs-umbrel-store/issues
+repo: https://github.com/EvolutionAPI/evolution-api
+support: https://github.com/EvolutionAPI/evolution-api/issues
 gallery:
   - https://i.imgur.com/Q0upAzc.png
 releaseNotes: >-
-  Add what's new in the latest version of your app here.
+  Instalação completa com PostgreSQL e Redis.
+  Evolution API v2.1.1 - primeira versão para Umbrel.
+
 dependencies: []
 path: ""
 defaultUsername: ""
-defaultPassword: ""
+# Chave padrão para testes; em produção defina via .env (EVOLUTION_API_KEY)
+defaultPassword: "evolution_umbrel_api_key"

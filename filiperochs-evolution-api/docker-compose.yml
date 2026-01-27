@@ -1,15 +1,87 @@
+# Evolution API v2 - Configuração completa para Umbrel
+# Documentação: https://doc.evolution-api.com/v2/pt/get-started/introduction
+# Requisitos: PostgreSQL + Redis (incluídos abaixo)
+#
+# Para personalizar: crie um arquivo .env na pasta de dados do app com:
+#   EVOLUTION_API_KEY=sua_chave_forte
+#   EVOLUTION_DB_PASSWORD=sua_senha_postgres
+#   SERVER_URL=https://seu-dominio.com/filiperochs-evolution-api  (opcional, para webhooks)
+
 version: "3.9"
 
 services:
+  # Proxy Umbrel - encaminha tráfego para o container da Evolution API
+  # Formato APP_HOST: <project>_<service-name>_1 (Docker Compose naming)
   app_proxy:
     environment:
       APP_HOST: filiperochs-evolution-api_evolution-api_1
       APP_PORT: 8080
 
+  # PostgreSQL - banco de dados requerido pela Evolution API v2
+  # Doc: https://doc.evolution-api.com/v2/en/requirements/database
+  postgres:
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: evolution
+      # Senha do banco - em produção considere alterar (via .env ou editando este arquivo)
+      POSTGRES_PASSWORD: ${EVOLUTION_DB_PASSWORD:-evolution_umbrel_db}
+      POSTGRES_DB: evolution
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U evolution -d evolution"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Redis - cache requerido pela Evolution API v2
+  # Doc: https://doc.evolution-api.com/v2/en/requirements/redis
+  redis:
+    image: redis:7-alpine
+    restart: always
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # Evolution API v2 - API de WhatsApp e integrações
+  # Doc: https://doc.evolution-api.com/v2/pt/install/docker
   evolution-api:
     image: atendai/evolution-api:v2.1.1
     restart: always
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
-      - AUTHENTICATION_API_KEY=42956C4C923645CAAFCCE10F7D57E11A
+      # Autenticação - em produção altere esta chave (crie .env com EVOLUTION_API_KEY=sua_chave)
+      - AUTHENTICATION_API_KEY=${EVOLUTION_API_KEY:-evolution_umbrel_api_key}
+      # Banco PostgreSQL (host = nome do serviço na rede Docker)
+      - DATABASE_ENABLED=true
+      - DATABASE_PROVIDER=postgresql
+      - DATABASE_CONNECTION_URI=postgresql://evolution:${EVOLUTION_DB_PASSWORD:-evolution_umbrel_db}@postgres:5432/evolution?schema=public
+      - DATABASE_CONNECTION_CLIENT_NAME=evolution_umbrel
+      - DATABASE_SAVE_DATA_INSTANCE=true
+      - DATABASE_SAVE_DATA_NEW_MESSAGE=true
+      - DATABASE_SAVE_MESSAGE_UPDATE=true
+      - DATABASE_SAVE_DATA_CONTACTS=true
+      - DATABASE_SAVE_DATA_CHATS=true
+      - DATABASE_SAVE_DATA_LABELS=true
+      - DATABASE_SAVE_DATA_HISTORIC=true
+      # Redis (host = nome do serviço na rede Docker)
+      - CACHE_REDIS_ENABLED=true
+      - CACHE_REDIS_URI=redis://redis:6379/0
+      - CACHE_REDIS_PREFIX_KEY=evolution
+      - CACHE_REDIS_SAVE_INSTANCES=false
+      - CACHE_LOCAL_ENABLED=false
+      # Servidor - opcional: defina SERVER_URL se for usar webhooks externos
+      # Ex: SERVER_URL=https://seu-dominio.com/filiperochs-evolution-api
+      - SERVER_TYPE=http
+      - SERVER_PORT=${APP_EVOLUTION_API_PORT:-8080}
     volumes:
       - ${APP_DATA_DIR}/data/evolution:/evolution/instances
