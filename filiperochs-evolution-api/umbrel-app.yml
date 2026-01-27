@@ -1,0 +1,28 @@
+manifestVersion: 1
+id: filiperochs-evolution-api
+name: Evolution API
+tagline: Replace this tagline with your app's tagline
+icon: https://i.imgur.com/E7BL0Ko.png
+category: Development
+version: "1.0.0"
+port: 8090
+description: >-
+  Add your app's description here.
+
+
+  You can also add newlines!
+
+developer: Filipe
+website: https://filiperocha.dev
+submitter: Filipe
+submission: https://github.com/filiperochs/filiperochs-umbrel-store
+repo: https://github.com/filiperochs/filiperochs-umbrel-store
+support: https://github.com/filiperochs/filiperochs-umbrel-store/issues
+gallery:
+  - https://i.imgur.com/Q0upAzc.png
+releaseNotes: >-
+  Add what's new in the latest version of your app here.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

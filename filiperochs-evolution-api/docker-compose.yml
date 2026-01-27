@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: filiperochs-evolution-api_evolution-api_1
+      APP_PORT: 8080
+
+  evolution-api:
+    image: atendai/evolution-api:v2.1.1
+    restart: always
+    environment:
+      - AUTHENTICATION_API_KEY=42956C4C923645CAAFCCE10F7D57E11A
+    volumes:
+      - ${APP_DATA_DIR}/data/evolution:/evolution/instances
