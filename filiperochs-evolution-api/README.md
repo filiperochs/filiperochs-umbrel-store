@@ -8,7 +8,7 @@ Instalação da [Evolution API v2](https://doc.evolution-api.com/v2/pt/get-start
 - **PostgreSQL 16** – Banco de dados exigido pela Evolution API v2
 - **Redis 7** – Cache exigido pela Evolution API v2
 
-O proxy do Umbrel (`app_proxy`) encaminha o tráfego para o container da Evolution API na porta 8080.
+O proxy do Umbrel (`app_proxy`) encaminha o tráfego para o container da Evolution API na porta 4502.
 
 ## Credenciais e segurança
 

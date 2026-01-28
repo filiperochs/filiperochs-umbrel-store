@@ -12,11 +12,11 @@ version: "3.9"
 services:
   # Proxy Umbrel - encaminha tráfego para o container da Evolution API
   # APP_HOST: nome exato que o proxy do Umbrel usa para resolver (<pasta>_<serviço>_1).
-  # APP_PORT: deve coincidir com SERVER_PORT da Evolution API (8080).
+  # APP_PORT: deve coincidir com SERVER_PORT da Evolution API (4502).
   app_proxy:
     environment:
       APP_HOST: filiperochs-evolution-api_evolution-api_1
-      APP_PORT: 8080
+      APP_PORT: 4502
 
   # PostgreSQL - banco de dados requerido pela Evolution API v2
   # Doc: https://doc.evolution-api.com/v2/en/requirements/database
@@ -84,8 +84,8 @@ services:
       - CACHE_LOCAL_ENABLED=false
       # Servidor - opcional: defina SERVER_URL se for usar webhooks externos
       # Ex: SERVER_URL=https://seu-dominio.com/filiperochs-evolution-api
-      # Porta fixa 8080 para bater com APP_PORT do proxy (evitar uso de port do manifest aqui)
+      # Porta 4502 - deve coincidir com APP_PORT do proxy
       - SERVER_TYPE=http
-      - SERVER_PORT=8080
+      - SERVER_PORT=4502
     volumes:
       - ${APP_DATA_DIR}/data/evolution:/evolution/instances
