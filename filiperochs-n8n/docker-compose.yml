@@ -36,11 +36,10 @@ services:
 
   # n8n - plataforma de automação de workflows
   # Doc: https://docs.n8n.io/hosting/installation/docker/
-  # user: "0:0" evita EACCES quando o volume (APP_DATA_DIR) é criado como root pelo host/Umbrel
   n8n:
     image: n8nio/n8n:latest
     container_name: filiperochs-n8n_n8n_1
-    user: "0:0"
+    user: "1000:1000"
     restart: always
     depends_on:
       postgres:
