@@ -17,6 +17,7 @@ services:
     environment:
       APP_HOST: filiperochs-evolution-api_evolution-api_1
       APP_PORT: 4502
+      PROXY_AUTH_ADD: "false"
 
   # PostgreSQL - banco de dados requerido pela Evolution API v2
   # Doc: https://doc.evolution-api.com/v2/en/requirements/database
