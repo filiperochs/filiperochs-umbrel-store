@@ -49,6 +49,7 @@ services:
       - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-UTC}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_RUNNERS_ENABLED=true
+      - N8N_SECURE_COOKIE=false
       # PostgreSQL (host = nome do serviço na rede Docker)
       - DB_TYPE=postgresdb
       - DB_POSTGRESDB_HOST=postgres
