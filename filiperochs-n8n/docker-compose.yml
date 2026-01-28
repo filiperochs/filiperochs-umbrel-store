@@ -5,9 +5,7 @@ services:
     environment:
       APP_HOST: filiperochs-n8n_n8n_1
       APP_PORT: 5678
-      # These webhook endpoints are protected using Basic or Header Auth
-      # More details here: https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.webhook/
-      PROXY_AUTH_WHITELIST: "/webhook-test/*,/webhook/*"
+      PROXY_AUTH_ADD: "false"
 
   n8n:
     image: n8nio/n8n:2.4.5@sha256:1e57b650fa1884af5c52cac2e3d9f05bb6701a6b4214bb74d2a334cc0bb9296d
@@ -22,5 +20,5 @@ services:
       - N8N_HOST=$DEVICE_DOMAIN_NAME
       - N8N_SECURE_COOKIE=false
       - N8N_DIAGNOSTICS_ENABLED=false
-      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=false
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_RUNNERS_ENABLED=true
