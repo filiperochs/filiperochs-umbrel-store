@@ -1,6 +1,6 @@
 manifestVersion: 1
 id: filiperochs-n8n
-category: Development
+category: automation
 name: n8n
 version: "2.4.5"
 icon: https://getumbrel.github.io/umbrel-apps-gallery/n8n/icon.svg
