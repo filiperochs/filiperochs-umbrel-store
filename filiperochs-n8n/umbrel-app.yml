@@ -33,9 +33,9 @@ repo: https://github.com/n8n-io/n8n
 support: https://docs.n8n.io/
 port: 5678
 gallery:
-  - 1.jpg
-  - 2.jpg
-  - 3.jpg
+  - https://getumbrel.github.io/umbrel-apps-gallery/n8n/1.jpg
+  - https://getumbrel.github.io/umbrel-apps-gallery/n8n/2.jpg
+  - https://getumbrel.github.io/umbrel-apps-gallery/n8n/3.jpg
 path: ""
 defaultUsername: ""
 defaultPassword: ""
