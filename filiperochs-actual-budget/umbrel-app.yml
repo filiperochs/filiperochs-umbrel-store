@@ -1,0 +1,24 @@
+manifestVersion: 1
+id: filiperochs-actual-budget
+category: finances
+name: Actual Budget
+version: "25.12.0"
+tagline: Local-first OpenSource Budget tool
+description: >-
+  Actual Budget is a super fast and privacy-focused app for managing your finances. At its heart is the well proven and much loved Envelope Budgeting methodology. You own your data and can do whatever you want with it. Featuring multi-device sync, optional end-to-end encryption and so much more. 
+releaseNotes: >-
+  This version includes various improvements and bug fixes.
+developer: actualbudget
+website: https://hub.docker.com/r/actualbudget/actual-server
+dependencies: []
+repo: https://github.com/filiperochs/filiperochs-umbrel-store
+support: https://github.com/filiperochs/filiperochs-umbrel-store/issues
+port: 10001
+gallery:
+  - https://raw.githubusercontent.com/bigbeartechworld/big-bear-umbrel/refs/heads/master/big-bear-umbrel-actual-server/3.jpg
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+icon: https://cdn.jsdelivr.net/gh/selfhst/icons/png/actual-budget.png
+submitter: Filipe Rocha
+submission: https://github.com/filiperochs/filiperochs-umbrel-store
