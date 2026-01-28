@@ -1,0 +1,37 @@
+# Manifest n8n para Umbrel Community App Store
+# Documentação: https://docs.n8n.io/hosting/installation/docker/
+
+manifestVersion: 1
+id: filiperochs-n8n
+name: n8n
+tagline: Automação de workflows, integrações e automação sem código
+icon: https://upload.wikimedia.org/wikipedia/commons/d/d9/N8n_logo.png
+category: Development
+version: "1.0.0"
+# Porta padrão do n8n; deve coincidir com APP_PORT no docker-compose (5678)
+port: 5678
+description: >-
+  n8n é uma ferramenta de automação de workflows que conecta apps e serviços.
+  Inclui PostgreSQL para persistência de workflows e credenciais.
+
+  Após instalar, acesse a interface e crie sua primeira conta (primeiro usuário vira owner).
+  Em produção, defina N8N_ENCRYPTION_KEY no ambiente para criptografar credenciais.
+
+  Documentação: https://docs.n8n.io/
+  Variáveis de ambiente: https://docs.n8n.io/hosting/configuration/environment-variables/
+
+developer: n8n / Filipe
+website: https://n8n.io
+submitter: Filipe
+submission: https://github.com/filiperochs/filiperochs-umbrel-store
+repo: https://github.com/n8n-io/n8n
+support: https://community.n8n.io
+gallery:
+  - https://upload.wikimedia.org/wikipedia/commons/d/d9/N8n_logo.png
+releaseNotes: >-
+  Instalação com PostgreSQL. n8n 2.4.6 - primeira versão para Umbrel.
+
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
