@@ -1,37 +1,42 @@
-# Manifest n8n para Umbrel Community App Store
-# Documentação: https://docs.n8n.io/hosting/installation/docker/
-
 manifestVersion: 1
-id: filiperochs-n8n
+id: n8n
+category: automation
 name: n8n
-tagline: Automação de workflows, integrações e automação sem código
-icon: https://upload.wikimedia.org/wikipedia/commons/d/d9/N8n_logo.png
-category: Development
-version: "1.0.0"
-# Porta padrão do n8n; deve coincidir com APP_PORT no docker-compose (5678)
-port: 5678
-description: >-
-  n8n é uma ferramenta de automação de workflows que conecta apps e serviços.
-  Inclui PostgreSQL para persistência de workflows e credenciais.
-
-  Após instalar, acesse a interface e crie sua primeira conta (primeiro usuário vira owner).
-  Em produção, defina N8N_ENCRYPTION_KEY no ambiente para criptografar credenciais.
-
-  Documentação: https://docs.n8n.io/
-  Variáveis de ambiente: https://docs.n8n.io/hosting/configuration/environment-variables/
-
-developer: n8n / Filipe
-website: https://n8n.io
-submitter: Filipe
-submission: https://github.com/filiperochs/filiperochs-umbrel-store
-repo: https://github.com/n8n-io/n8n
-support: https://community.n8n.io
-gallery:
-  - https://upload.wikimedia.org/wikipedia/commons/d/d9/N8n_logo.png
+version: "2.4.5"
 releaseNotes: >-
-  Instalação com PostgreSQL. n8n 2.4.6 - primeira versão para Umbrel.
+  ⚠️ Multiple breaking changes in this update, make sure to have a backup before updating: https://docs.n8n.io/2-0-breaking-changes/
 
+
+  This release includes various bug fixes and improvements.
+
+
+  Full release notes are found at https://github.com/n8n-io/n8n/releases
+tagline: Build complex workflows, really fast
+description: >-
+  n8n is an extendable workflow automation tool. With a fair-code distribution model, n8n will always have visible source code, 
+  be available to self-host, and allow you to add your own custom functions, logic and apps. 
+  n8n's node-based approach makes it highly versatile, enabling you to connect anything to everything.
+
+
+  n8n (pronounced n-eight-n) helps you to connect any app with an API with any other, and manipulate its data with little or no code.
+
+
+  Customizable: highly flexible workflows and the option to build custom nodes.
+
+
+  Privacy-focused: self-host n8n for privacy and security.
+developer: n8n
+website: https://n8n.io
 dependencies: []
+repo: https://github.com/n8n-io/n8n
+support: https://docs.n8n.io/
+port: 5678
+gallery:
+  - 1.jpg
+  - 2.jpg
+  - 3.jpg
 path: ""
 defaultUsername: ""
 defaultPassword: ""
+submitter: Filipe Rocha
+submission: https://github.com/filiperochs/filiperochs-umbrel-store
