@@ -14,7 +14,7 @@ services:
         REPO_URL: ${FERMI_REPO_URL:-https://github.com/MathMan05/Fermi.git}
         BRANCH: ${FERMI_REPO_BRANCH:-main}
         CLIENT_PATH: ${FERMI_CLIENT_PATH:-fermi}
-    image: filiperochs-spacebarchat-fermi:built
+    # container_name: filiperochs-spacebarchat_fermi_1
     restart: on-failure
     depends_on:
       - server
