@@ -6,7 +6,7 @@ version: "1.0.0"
 icon: https://raw.githubusercontent.com/spacebarchat/spacebarchat/fde4faf8038f62c05e28a714d8fbc5ff4e5ffb8b/branding/svg/Spacebar__Icon-Rounded.svg
 releaseNotes: >-
   First version of chat.
-tagline: Build complex workflows, really fast
+tagline: Chat, voice and video platform.
 description: >-
   SpacebarChat is a free and open source, full stack reverse engineering and reimplementation of Discord.
 

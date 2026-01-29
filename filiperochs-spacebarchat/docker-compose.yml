@@ -12,9 +12,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: filiperochs-spacebarchat-fermi:latest
+      args:
+        REPO_URL: ${FERMI_REPO_URL:-https://github.com/MathMan05/Fermi.git}
+        BRANCH: ${FERMI_REPO_BRANCH:-main}
+        CLIENT_PATH: ${FERMI_CLIENT_PATH:-fermi}
+    image: filiperochs-spacebarchat-fermi:built
     restart: on-failure
-    user: "1000:1000"
     depends_on:
       - server
     expose:
