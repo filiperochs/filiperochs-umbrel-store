@@ -11,7 +11,7 @@ services:
   fermi:
     build:
       context: .
-      dockerfile: Dockerfile.fermi
+      dockerfile: Dockerfile
     image: filiperochs-spacebarchat-fermi:latest
     restart: on-failure
     user: "1000:1000"
