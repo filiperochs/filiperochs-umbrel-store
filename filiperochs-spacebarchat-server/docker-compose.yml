@@ -20,6 +20,8 @@ services:
       - DATABASE=postgres://${POSTGRES_USER:-spacebar}:${POSTGRES_PASSWORD:-spacebar}@db:5432/${POSTGRES_DATABASE:-spacebar}
       - STORAGE_PROVIDER=file
       - STORAGE_LOCATION=/exec/persistent/storage/
+    networks:
+      - filiperochs_spacebarchat_server_network
     depends_on:
       db:
         condition: service_healthy
@@ -33,6 +35,8 @@ services:
       - POSTGRES_DB=${POSTGRES_DATABASE:-spacebar}
     volumes:
       - ${APP_DATA_DIR}/postgres:/var/lib/postgresql/data
+    networks:
+      - filiperochs_spacebarchat_server_network
     healthcheck:
       test:
         [
@@ -42,3 +46,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+
+networks:
+  filiperochs_spacebarchat_server_network:
+    driver: bridge
