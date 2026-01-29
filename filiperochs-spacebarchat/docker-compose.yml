@@ -7,13 +7,10 @@ services:
       PROXY_AUTH_ADD: "false"
 
   fermi:
-    image: node:20-bullseye
+    image: filiperochs/spacebarchat_client_fermi
     container_name: filiperochs-spacebarchat_fermi_1
     restart: on-failure
-    working_dir: /usr/src/app
-    # persist app code so clone survives container restarts
-    volumes:
-      - ${APP_DATA_DIR}/fermi:/usr/src/app
+    # use prebuilt client image; do not mount local code (image contains built assets)
     depends_on:
       - server
     expose:
@@ -21,12 +18,6 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=5236
-    command:
-      sh -c "apt-get update && apt-get install -y git --no-install-recommends && rm -rf /var/lib/apt/lists/* && \
-      if [ ! -f /usr/src/app/package.json ]; then \
-      git clone --depth 1 --branch ${FERMI_REPO_BRANCH:-main} ${FERMI_REPO_URL:-https://github.com/MathMan05/Fermi.git} /tmp/fermi && \
-      cp -a /tmp/fermi/${FERMI_CLIENT_PATH:-fermi}/. /usr/src/app/ || true; \
-      fi && npm ci --no-audit --no-fund && npm run build && npm run start"
 
   server:
     image: spacebarchat/server:latest-postgressql
@@ -57,7 +48,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-spacebar}
       - POSTGRES_DB=${POSTGRES_DATABASE:-spacebar}
     volumes:
-      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+      - ${APP_DATA_DIR}/postgres:/var/lib/postgresql/data
     healthcheck:
       test:
         [
