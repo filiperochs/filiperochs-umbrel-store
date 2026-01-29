@@ -1,15 +1,16 @@
 services:
-  app_proxy:
-    environment:
-      APP_HOST: filiperochs-spacebarchat-server_server_1
-      APP_PORT: 5235
-      PROXY_AUTH_ADD: "false"
+  # app_proxy:
+  #   environment:
+  #     APP_HOST: filiperochs-spacebarchat-server_server_1
+  #     APP_PORT: 5235
+  #     PROXY_AUTH_ADD: "false"
 
   server:
     image: spacebarchat/server:latest-postgressql
     container_name: filiperochs-spacebarchat-server_server_1
     restart: unless-stopped
-    user: "1000:1000"
+    ports:
+      - "5235:5235"
     # monta o storage usado pela imagem oficial
     volumes:
       - ${APP_DATA_DIR}/storage:/exec/persistent/storage
