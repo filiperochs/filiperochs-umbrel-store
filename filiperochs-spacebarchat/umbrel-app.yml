@@ -1,0 +1,28 @@
+manifestVersion: 1
+id: filiperochs-spacebarchat
+category: social
+name: SpacebarChat Fermi
+version: "1.0.0"
+icon: https://raw.githubusercontent.com/spacebarchat/spacebarchat/fde4faf8038f62c05e28a714d8fbc5ff4e5ffb8b/branding/svg/Spacebar__Icon-Rounded.svg
+releaseNotes: >-
+  First version of chat.
+tagline: Build complex workflows, really fast
+description: >-
+  SpacebarChat is a free and open source, full stack reverse engineering and reimplementation of Discord.
+
+  It's a discord-compatible chat, voice and video platform.
+
+  We utilizes the Fermi client in this installation.
+developer: spacebarchat
+website: https://spacebar.chat/
+dependencies: []
+repo: https://github.com/spacebarchat/spacebarchat
+support: https://github.com/spacebarchat/spacebarchat/issues
+port: 5236
+gallery:
+  - https://raw.githubusercontent.com/spacebarchat/spacebarchat/refs/heads/master/branding/png/Spacebar.png
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+submitter: Filipe Rocha
+submission: https://github.com/filiperochs/filiperochs-umbrel-store

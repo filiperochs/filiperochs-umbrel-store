@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+  app_proxy:
+    environment:
+      # proxy deve apontar para o serviço web (Fermi)
+      APP_HOST: filiperochs-spacebarchat_fermi_1
+      APP_PORT: 5236
+      PROXY_AUTH_ADD: "false"
+
+  fermi:
+    build:
+      context: .
+      dockerfile: Dockerfile.fermi
+    image: filiperochs-spacebarchat-fermi:latest
+    restart: on-failure
+    user: "1000:1000"
+    depends_on:
+      - server
+    expose:
+      - "5236"
+    environment:
+      - NODE_ENV=production
+      - PORT=5236
+
+  server:
+    image: spacebarchat/server:latest-postgressql
+    container_name: filiperochs-spacebarchat_server_1
+    restart: unless-stopped
+    user: "1000:1000"
+    # monta o storage usado pela imagem oficial
+    volumes:
+      - ${APP_DATA_DIR}/storage:/exec/persistent/storage
+      - ${APP_DATA_DIR}/data:/spacebar
+    expose:
+      - "3001"
+    environment:
+      - PORT=3001
+      # conexão com Postgres (service name = db)
+      - DATABASE=postgres://${POSTGRES_USER:-spacebar}:${POSTGRES_PASSWORD:-spacebar}@db:5432/${POSTGRES_DATABASE:-spacebar}
+      - STORAGE_PROVIDER=file
+      - STORAGE_LOCATION=/exec/persistent/storage/
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-spacebar}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-spacebar}
+      - POSTGRES_DB=${POSTGRES_DATABASE:-spacebar}
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-spacebar} -d ${POSTGRES_DATABASE:-spacebar}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
