@@ -1,0 +1,26 @@
+manifestVersion: 1
+id: filiperochs-coturn
+category: social
+name: Coturn
+version: "4.8.0"
+icon: https://img.filiperocha.dev/image/dc42bf8f-62fb-4b67-9833-80e71b5619b2.png
+releaseNotes: >-
+  First version of coturn
+tagline: coturn
+description: >-
+  coturn is a free open source implementation of TURN and STUN Server.
+
+  The TURN Server is a VoIP media traffic NAT traversal server and gateway.
+developer: coturn
+website: https://github.com/coturn/coturn
+dependencies: []
+repo: https://github.com/coturn/coturn
+support: https://github.com/coturn/coturn/issues
+port: 3478
+gallery:
+  - https://raw.githubusercontent.com/bigbeartechworld/big-bear-umbrel/refs/heads/master/big-bear-umbrel-actual-server/3.jpg
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+submitter: Filipe Rocha
+submission: https://github.com/filiperochs/filiperochs-umbrel-store

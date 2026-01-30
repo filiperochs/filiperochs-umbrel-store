@@ -1,0 +1,15 @@
+services:
+  app_proxy:
+    environment:
+      APP_HOST: filiperochs-coturn_coturn_1
+      APP_PORT: 3478
+      PROXY_AUTH_ADD: "false"
+
+  coturn:
+    image: coturn/coturn
+    restart: unless-stopped
+    network_mode: "host"
+    volumes:
+      - ${APP_DATA_DIR}/coturn:/var/lib/coturn
+    environment:
+      - REALM=${COTURN_REALM:-turn.filiperocha.dev}
