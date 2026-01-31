@@ -1,0 +1,26 @@
+services:
+  # Proxy Umbrel - expõe o serviço Redis via proxy do Umbrel
+  app_proxy:
+    environment:
+      APP_HOST: filiperochs-redis_redis_1
+      APP_PORT: 6379
+      PROXY_AUTH_ADD: "false"
+
+  redis:
+    image: redis:8.4-alpine
+    container_name: filiperochs-redis_redis_1
+    restart: always
+    ports:
+      - "6379:6379"
+    # Se definir a variável REDIS_PASSWORD, o container passa a exigir autenticação
+    command: >-
+      sh -c 'if [ -n "${REDIS_PASSWORD:-}" ]; then exec redis-server --requirepass "${REDIS_PASSWORD}" --save 60 1 --appendonly yes; else exec redis-server --save 60 1 --appendonly yes; fi'
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
