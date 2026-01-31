@@ -5,7 +5,7 @@ tagline: Cache e datastore em memória (Redis)
 icon: https://www.svgrepo.com/show/303460/redis-logo.svg
 category: Databases
 version: "8.4.0"
-port: 6380
+port: 6379
 description: >-
   Instala o servidor Redis (8) com armazenamento persistente. O Redis será
   exposto como serviço na porta 6379.

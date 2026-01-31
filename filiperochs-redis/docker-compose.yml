@@ -3,15 +3,13 @@ services:
   app_proxy:
     environment:
       APP_HOST: filiperochs-redis_redis_1
-      APP_PORT: 6380
+      APP_PORT: 6379
       PROXY_AUTH_ADD: "false"
 
   redis:
     image: redis:8.4-alpine
     container_name: filiperochs-redis_redis_1
     restart: always
-    ports:
-      - "6380:6379"
     # Se definir a variável REDIS_PASSWORD, o container passa a exigir autenticação
     command: >-
       sh -c 'if [ -n "${REDIS_PASSWORD:-}" ]; then exec redis-server --requirepass "${REDIS_PASSWORD}" --save 60 1 --appendonly yes; else exec redis-server --save 60 1 --appendonly yes; fi'
