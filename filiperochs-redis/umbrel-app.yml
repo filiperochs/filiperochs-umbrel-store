@@ -5,9 +5,9 @@ tagline: Cache e datastore em memória (Redis)
 icon: https://www.svgrepo.com/show/303460/redis-logo.svg
 category: Databases
 version: "8.4.0"
-port: 6379
+port: 6380
 description: >-
-  Instala o servidor Redis (7) com armazenamento persistente. O Redis será
+  Instala o servidor Redis (8) com armazenamento persistente. O Redis será
   exposto como serviço na porta 6379.
 
 developer: Filiperochs
@@ -18,7 +18,7 @@ repo: https://github.com/filiperochs/filiperochs-redis
 support: https://github.com/filiperochs/filiperochs-redis/issues
 gallery: []
 releaseNotes: >-
-  Versão inicial: Redis 7 com volume persistente e opção de senha via
+  Versão inicial: Redis 8 com volume persistente e opção de senha via
   variável de ambiente REDIS_PASSWORD.
 dependencies: []
 path: ""
