@@ -54,7 +54,7 @@ services:
   # Doc: https://doc.evolution-api.com/v2/pt/install/docker
   # container_name: garante que o proxy resolva este hostname (exigido pelo Umbrel)
   evolution-api:
-    image: atendai/evolution-api:v2.1.1
+    image: evoapicloud/evolution-api:v2.3.7
     container_name: filiperochs-evolution-api_evolution-api_1
     restart: always
     depends_on:
@@ -84,7 +84,7 @@ services:
       - CACHE_REDIS_SAVE_INSTANCES=false
       - CACHE_LOCAL_ENABLED=false
       # Servidor - opcional: defina SERVER_URL se for usar webhooks externos
-      # Ex: SERVER_URL=https://seu-dominio.com/filiperochs-evolution-api
+      - SERVER_URL=https://evo.filiperocha.dev
       # Porta 4502 - deve coincidir com APP_PORT do proxy
       - SERVER_TYPE=http
       - SERVER_PORT=4502
