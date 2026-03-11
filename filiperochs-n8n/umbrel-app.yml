@@ -2,13 +2,19 @@ manifestVersion: 1
 id: filiperochs-n8n
 category: automation
 name: n8n
-version: "2.4.5"
+version: "2.11.2"
 icon: https://getumbrel.github.io/umbrel-apps-gallery/n8n/icon.svg
 releaseNotes: >-
-  ⚠️ Multiple breaking changes in this update, make sure to have a backup before updating: https://docs.n8n.io/2-0-breaking-changes/
+  2.11.2 (2026-03-09)
+  Bug Fixes
+  ai-builder: Don't use autoGenerate for UUID columns for WFB persistence migration (backport to release-candidate/2.11.x) (#26589) (d672e4c)
+  Form Node: Improve custom CSS sanitization (backport to release-candidate/2.11.x) (#26666) (7ab5335)
+  Form Node: Improve form rendering consistency (backport to release-candidate/2.11.x) (#26652) (2481969)
+  Log streaming config works with proxy (backport to release-candidate/2.11.x) (#26590) (2034f5f)
 
-
-  This release includes various bug fixes and improvements.
+  Features
+  Add option to hide credential overwrites (backport to release-candidate/2.11.x) (#26679) (ab6791d)
+  Implement additional checkbox confirmation for quick connect flow (backport to release-candidate/2.11.x) (#26686) (54d8c65)
 
 
   Full release notes are found at https://github.com/n8n-io/n8n/releases
