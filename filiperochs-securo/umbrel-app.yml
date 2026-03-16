@@ -1,0 +1,28 @@
+manifestVersion: 1
+id: filiperochs-securo
+name: Securo
+tagline: Controle financeiro pessoal com open finance (Pluggy)
+icon: https://raw.githubusercontent.com/securo-finance/securo/28839f9407d83d70490e0c6956964bb601a30a4e/docs/logo.svg
+category: Finance
+version: "latest"
+port: 3000
+description: >-
+  Securo é uma aplicação de finanças pessoais self-hosted que integra com o
+  open finance brasileiro via Pluggy. Acompanhe transações, saldos e
+  investimentos de todas as suas contas em um só lugar.
+
+developer: securo-finance
+website: https://github.com/securo-finance/securo
+submitter: filiperochs
+submission: https://github.com/filiperochs/filiperochs-umbrel-store
+repo: https://github.com/securo-finance/securo
+support: https://github.com/securo-finance/securo/issues
+gallery:
+  - https://www.usesecuro.com/screenshot-light.png
+  - https://www.usesecuro.com/screenshot-dark.png
+releaseNotes: >-
+  Versão inicial do Securo na Umbrel Community App Store.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""

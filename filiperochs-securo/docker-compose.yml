@@ -1,0 +1,100 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: filiperochs-securo_frontend_1
+      APP_PORT: 80
+
+  frontend:
+    image: ghcr.io/securo-finance/securo-frontend:latest
+    restart: unless-stopped
+    depends_on:
+      - backend
+    environment:
+      BACKEND_URL: http://filiperochs-securo_backend_1:8000
+      FRONTEND_URL: http://filiperochs-securo_frontend_1:80
+
+  backend:
+    image: ghcr.io/securo-finance/securo-backend:latest
+    restart: unless-stopped
+    command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@filiperochs-securo_db_1:5432/securo
+      REDIS_URL: redis://filiperochs-securo_redis_1:6379/0
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: "false"
+      FRONTEND_URL: http://filiperochs-securo_frontend_1:80
+      PLUGGY_CLIENT_ID: ${PLUGGY_CLIENT_ID}
+      PLUGGY_CLIENT_SECRET: ${PLUGGY_CLIENT_SECRET}
+      PLUGGY_OAUTH_REDIRECT_URI: ${PLUGGY_OAUTH_REDIRECT_URI}
+
+  celery-worker:
+    image: ghcr.io/securo-finance/securo-backend:latest
+    restart: unless-stopped
+    command: celery -A app.worker worker --loglevel=info
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@filiperochs-securo_db_1:5432/securo
+      REDIS_URL: redis://filiperochs-securo_redis_1:6379/0
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: "false"
+      FRONTEND_URL: http://filiperochs-securo_frontend_1:80
+      PLUGGY_CLIENT_ID: ${PLUGGY_CLIENT_ID}
+      PLUGGY_CLIENT_SECRET: ${PLUGGY_CLIENT_SECRET}
+      PLUGGY_OAUTH_REDIRECT_URI: ${PLUGGY_OAUTH_REDIRECT_URI}
+
+  celery-beat:
+    image: ghcr.io/securo-finance/securo-backend:latest
+    restart: unless-stopped
+    command: celery -A app.worker beat --loglevel=info
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres@filiperochs-securo_db_1:5432/securo
+      REDIS_URL: redis://filiperochs-securo_redis_1:6379/0
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: "false"
+      FRONTEND_URL: http://filiperochs-securo_frontend_1:80
+      PLUGGY_CLIENT_ID: ${PLUGGY_CLIENT_ID}
+      PLUGGY_CLIENT_SECRET: ${PLUGGY_CLIENT_SECRET}
+      PLUGGY_OAUTH_REDIRECT_URI: ${PLUGGY_OAUTH_REDIRECT_URI}
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: securo
+    volumes:
+      - ${APP_DATA_DIR}/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  pgdata:
