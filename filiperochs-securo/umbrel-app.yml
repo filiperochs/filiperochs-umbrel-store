@@ -4,7 +4,7 @@ name: Securo
 tagline: Controle financeiro pessoal com open finance (Pluggy)
 icon: https://raw.githubusercontent.com/securo-finance/securo/28839f9407d83d70490e0c6956964bb601a30a4e/docs/logo.svg
 category: Finance
-version: "latest"
+version: "1.0.1"
 port: 3061
 description: >-
   Securo é uma aplicação de finanças pessoais self-hosted que integra com o
