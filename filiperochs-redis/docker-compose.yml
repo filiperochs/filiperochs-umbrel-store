@@ -5,6 +5,7 @@ services:
     environment:
       APP_HOST: filiperochs-redis_rediscommander_1
       APP_PORT: 6380
+      PROXY_AUTH_ADD: "false"
 
   redis:
     image: redis:7-alpine
