@@ -1,0 +1,38 @@
+manifestVersion: 1
+id: filiperochs-redis
+name: Redis
+tagline: In-memory data store and cache server
+icon: https://www.svgrepo.com/show/303460/redis-logo.svg
+category: Development
+version: "7.0.0"
+port: 8081
+description: >-
+  A personal Redis server with a web-based management interface.
+
+
+  Redis is an open-source, in-memory data structure store that can be used as a database, cache, and message broker. It supports various data structures such as strings, hashes, lists, sets, and sorted sets.
+
+
+  This installation includes Redis server and RedisCommander, a web-based interface for managing your Redis instances. RedisCommander provides an intuitive UI for viewing, editing, and managing your Redis data.
+
+
+  Features:
+  - In-memory data store for high-speed access
+  - Persistent storage with RDB snapshots
+  - Web management interface via RedisCommander
+  - Password authentication
+  - Available for internal applications and external connections
+developer: Redis
+website: https://redis.io
+submitter: Filipe Rocha
+submission: https://github.com/filiperochs/filiperochs-umbrel-store
+repo: https://github.com/redis/redis
+support: https://redis.io/community/
+gallery:
+  - https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Logo-redis_%28old%29.svg/1280px-Logo-redis_%28old%29.svg.png
+releaseNotes: >-
+  Initial release of filiperochs-redis with RedisCommander web interface and password authentication.
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: "umbrel"
