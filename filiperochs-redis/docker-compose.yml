@@ -4,7 +4,7 @@ services:
   app_proxy:
     environment:
       APP_HOST: filiperochs-redis_redis_1
-      APP_PORT: 6379
+      APP_PORT: 6389
       PROXY_AUTH_ADD: "false"
 
   redis:
@@ -16,7 +16,7 @@ services:
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD:-umbrel}
     ports:
-      - "6379:6379"
+      - "6389:6379"
     healthcheck:
       test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-umbrel}", "ping"]
       interval: 10s
@@ -27,10 +27,10 @@ services:
     image: rediscommander/redis-commander:latest
     restart: unless-stopped
     environment:
-      - REDIS_HOSTS=local:redis:6379:0:${REDIS_PASSWORD:-umbrel}
+      - REDIS_HOSTS=local:redis:6389:0:${REDIS_PASSWORD:-umbrel}
       - REDIS_PASSWORD=${REDIS_PASSWORD:-umbrel}
     ports:
-      - "6380:8081"
+      - "6390:8081"
     depends_on:
       redis:
         condition: service_healthy
