@@ -4,8 +4,8 @@ name: Redis
 tagline: In-memory data store and cache server
 icon: https://www.svgrepo.com/show/303460/redis-logo.svg
 category: Development
-version: "7.0.0"
-port: 8081
+version: "7.0.1"
+port: 6380
 description: >-
   A personal Redis server with a web-based management interface.
 
