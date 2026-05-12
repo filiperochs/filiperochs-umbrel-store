@@ -3,6 +3,7 @@ id: filiperochs-vaultwarden
 category: files
 name: Vaultwarden
 version: "1.36.0"
+icon: https://getumbrel.github.io/umbrel-apps-gallery/vaultwarden/icon.svg
 tagline: Unofficial Bitwarden® compatible server
 description: >-
   Vaultwarden is an alternative
