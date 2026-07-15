@@ -17,10 +17,10 @@ services:
       - PUID=1000
       - PGID=1000
       # Used to set the url for editor, REST API & webhooks
-      - N8N_HOST=n8n.filiperocha.dev
+      - N8N_HOST=n8n.fsrhost.com.br
       - N8N_PROTOCOL=https
-      - WEBHOOK_URL=https://n8n.filiperocha.dev
-      - N8N_EDITOR_BASE_URL=https://n8n.filiperocha.dev
+      - WEBHOOK_URL=https://n8n.fsrhost.com.br
+      - N8N_EDITOR_BASE_URL=https://n8n.fsrhost.com.br
       - N8N_PROXY_HOPS=1
       - GENERIC_TIMEZONE=America/Sao_Paulo
       - N8N_SECURE_COOKIE=false
