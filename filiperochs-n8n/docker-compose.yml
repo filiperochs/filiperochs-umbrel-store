@@ -8,7 +8,7 @@ services:
       PROXY_AUTH_ADD: "false"
 
   n8n:
-    image: n8nio/n8n:2.11.2@sha256:0d948060adcaf1da4a1410f3e1c071a093f7df1cce59c9d0e5f2f99eda14b322
+    image: n8nio/n8n:2.30.5@sha256:450853cd21a2ce36587c4c860eb26927c1ceba9496bf55f4c213b5d3a6dc8c6f
     restart: on-failure
     volumes:
       - ${APP_DATA_DIR}/.n8n:/home/node/.n8n
