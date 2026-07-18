@@ -13,7 +13,6 @@ services:
     ports:
       - "9987:9987/udp"
       - "30033:30033/tcp"
-      - "10080:10080/tcp"
     volumes:
       - ${APP_DATA_DIR}/data:/var/tsserver
     environment:
