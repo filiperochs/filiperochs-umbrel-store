@@ -1,0 +1,44 @@
+manifestVersion: 1
+id: filiperochs-teamspeak6
+category: social
+name: TeamSpeak 6 Server
+version: "1.0.0"
+icon: https://raw.githubusercontent.com/teamspeak/teamspeak6-server/main/icons/teamspeak_blue.svg
+tagline: Servidor de voz TeamSpeak 6 oficial
+description: >-
+  TeamSpeak 6 é a nova geração do servidor de voz TeamSpeak, com a WebQuery API
+  substituindo o antigo ServerQuery via telnet.
+
+
+  Este app roda o servidor oficial `teamspeaksystems/teamspeak6-server` com banco
+  de dados SQLite embutido (sem necessidade de um container de banco separado).
+
+
+  A porta de voz (9987/UDP) e a de transferência de arquivos (30033/TCP) ficam
+  expostas diretamente. A WebQuery API (porta 10080/TCP) vem habilitada para uso
+  futuro com bots e ferramentas de administração.
+
+
+  Importante: a licença TeamSpeak 3 Server não é compatível com o TeamSpeak 6 —
+  não há caminho de migração entre eles.
+
+
+  Na primeira inicialização, o servidor gera uma "privilege key" (chave de
+  privilégio) usada para reivindicar a administração no cliente TeamSpeak — essa
+  chave aparece apenas nos logs do container, então confira os logs do app após
+  o primeiro start.
+releaseNotes: >-
+  Primeira versão do app TeamSpeak 6 Server, com WebQuery API habilitada.
+developer: TeamSpeak Systems GmbH
+website: https://www.teamspeak.com/en/
+dependencies: []
+repo: https://github.com/teamspeak/teamspeak6-server
+support: https://github.com/teamspeak/teamspeak6-server/issues
+port: 10080
+gallery:
+  - https://www.teamspeak.com/user/themes/teamspeak/assets/images/mediakit/TS_Stacked_BlueDark.png
+path: ""
+defaultUsername: "serveradmin"
+defaultPassword: "umbrel"
+submitter: Filipe Rocha
+submission: https://github.com/filiperochs/filiperochs-umbrel-store
