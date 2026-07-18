@@ -7,20 +7,9 @@ services:
       APP_PORT: 10080
       PROXY_AUTH_ADD: "false"
 
-  permissions:
-    image: busybox
-    container_name: filiperochs-teamspeak6_permissions_1
-    restart: "no"
-    volumes:
-      - ${APP_DATA_DIR}/data:/var/tsserver
-    command: chown -R 9987:9987 /var/tsserver
-
   teamspeak:
     image: teamspeaksystems/teamspeak6-server:latest
     restart: on-failure
-    depends_on:
-      permissions:
-        condition: service_completed_successfully
     ports:
       - "9987:9987/udp"
       - "30033:30033/tcp"
