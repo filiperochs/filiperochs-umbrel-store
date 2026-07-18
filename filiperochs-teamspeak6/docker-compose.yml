@@ -17,7 +17,6 @@ services:
 
   teamspeak:
     image: teamspeaksystems/teamspeak6-server:latest
-    container_name: filiperochs-teamspeak6_teamspeak_1
     restart: on-failure
     depends_on:
       permissions:
