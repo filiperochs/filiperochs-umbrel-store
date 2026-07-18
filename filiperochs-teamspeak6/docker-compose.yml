@@ -9,8 +9,7 @@ services:
 
   teamspeak:
     image: teamspeaksystems/teamspeak6-server:latest
-    container_name: filiperochs-teamspeak6_teamspeak_1
-    restart: unless-stopped
+    restart: on-failure
     ports:
       - "9987:9987/udp"
       - "30033:30033/tcp"
