@@ -2,7 +2,7 @@ manifestVersion: 1
 id: filiperochs-teamspeak6
 category: social
 name: TeamSpeak 6 Server
-version: "1.0.0"
+version: "1.0.1"
 icon: https://raw.githubusercontent.com/teamspeak/teamspeak6-server/main/icons/teamspeak_blue.svg
 tagline: Servidor de voz TeamSpeak 6 oficial
 description: >-
