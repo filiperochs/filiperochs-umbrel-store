@@ -4,7 +4,7 @@ name: Securo
 tagline: Controle financeiro pessoal com open finance (Pluggy)
 icon: https://raw.githubusercontent.com/securo-finance/securo/28839f9407d83d70490e0c6956964bb601a30a4e/docs/logo.svg
 category: Finance
-version: "1.0.3"
+version: "1.0.5"
 port: 3061
 description: >-
   Securo é uma aplicação de finanças pessoais self-hosted que integra com o
@@ -21,8 +21,9 @@ gallery:
   - https://www.usesecuro.com/screenshot-light.png
   - https://www.usesecuro.com/screenshot-dark.png
 releaseNotes: >-
-  Corrige app inacessível: a imagem do frontend passou a escutar na porta
-  8080 internamente, mas o proxy ainda apontava para a porta 80.
+  Corrige erro 500 ao fazer login: o backend usa agora o $APP_SEED gerado
+  pela própria Umbrel para assinar os tokens JWT, em vez de uma SECRET_KEY
+  fixa.
 dependencies: []
 path: ""
 defaultUsername: ""

@@ -28,7 +28,7 @@ services:
     environment:
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@filiperochs-securo_db_1:5432/securo
       REDIS_URL: redis://filiperochs-securo_redis_1:6379/0
-      SECRET_KEY: ${SECRET_KEY}
+      SECRET_KEY: ${APP_SEED}
       DEBUG: "false"
       FRONTEND_URL: http://filiperochs-securo_frontend_1:8080
       PLUGGY_CLIENT_ID: ${PLUGGY_CLIENT_ID}
@@ -47,7 +47,7 @@ services:
     environment:
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@filiperochs-securo_db_1:5432/securo
       REDIS_URL: redis://filiperochs-securo_redis_1:6379/0
-      SECRET_KEY: ${SECRET_KEY}
+      SECRET_KEY: ${APP_SEED}
       DEBUG: "false"
       FRONTEND_URL: http://filiperochs-securo_frontend_1:8080
       PLUGGY_CLIENT_ID: ${PLUGGY_CLIENT_ID}
@@ -66,7 +66,7 @@ services:
     environment:
       DATABASE_URL: postgresql+asyncpg://postgres:postgres@filiperochs-securo_db_1:5432/securo
       REDIS_URL: redis://filiperochs-securo_redis_1:6379/0
-      SECRET_KEY: ${SECRET_KEY}
+      SECRET_KEY: ${APP_SEED}
       DEBUG: "false"
       FRONTEND_URL: http://filiperochs-securo_frontend_1:8080
       PLUGGY_CLIENT_ID: ${PLUGGY_CLIENT_ID}
