@@ -16,7 +16,7 @@ services:
     command: chown -R 9987:9987 /var/tsserver
 
   teamspeak:
-    image: teamspeaksystems/teamspeak6-server:latest
+    image: teamspeaksystems/teamspeak6-server:6.0.0-beta12.1@sha256:1938d31c2ed36af175049e9612f0bd2db2e492263818a5cd52683dd5482aaf99
     restart: on-failure
     depends_on:
       permissions:

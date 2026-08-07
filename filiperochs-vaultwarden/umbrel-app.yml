@@ -2,7 +2,7 @@ manifestVersion: 1
 id: filiperochs-vaultwarden
 category: files
 name: Vaultwarden
-version: "1.36.0"
+version: "1.37.1"
 icon: https://getumbrel.github.io/umbrel-apps-gallery/vaultwarden/icon.svg
 tagline: Unofficial Bitwarden® compatible server
 description: >-
@@ -48,8 +48,13 @@ description: >-
   *Please note that Vaultwarden is not associated with the Bitwarden® project nor 8bit Solutions LLC. When using this app, please report any bugs or suggestions to us directly, regardless of whatever clients you are using (mobile, desktop, browser, etc), and do not use Bitwarden®'s official support channels.
 
 releaseNotes: >-
-  This release includes important security fixes for SSO login, user and organization enumeration, existing-user SSO binding, and the website icon endpoint. It also adds item archiving, updates the Web Vault to v2026.4.1, adds SSO with OpenID Connect, improves future mobile app compatibility, and includes multiple WebAuthn, 2FA, organization, token, and vault-management fixes.
+  This patch release resolves the issues with invites.
+  If you have applied any workaround to fix this locally, please revert those fixes to prevent possible other issues.
 
+  I'm sorry that it took some time to check and validate this fix.
+
+  Also, this release fixes an issue (#7475) with all the Alpine based images which are build using https://github.com/BlackDex/rust-musl/.
+  An issue with the build image OpenSSL compilation is resolved and those are used to build the new alpine tagged containers.
 
   Full release notes are available at https://github.com/dani-garcia/vaultwarden/releases
 developer: Daniel García
