@@ -4,7 +4,7 @@ name: Securo
 tagline: Controle financeiro pessoal com open finance (Pluggy)
 icon: https://raw.githubusercontent.com/securo-finance/securo/28839f9407d83d70490e0c6956964bb601a30a4e/docs/logo.svg
 category: Finance
-version: "1.0.1"
+version: "1.0.2"
 port: 3061
 description: >-
   Securo é uma aplicação de finanças pessoais self-hosted que integra com o
@@ -21,7 +21,9 @@ gallery:
   - https://www.usesecuro.com/screenshot-light.png
   - https://www.usesecuro.com/screenshot-dark.png
 releaseNotes: >-
-  Versão inicial do Securo na Umbrel Community App Store.
+  Corrige falha de instalação: o banco de dados agora usa uma imagem com
+  pgvector, exigida pelo Securo v0.11.0+ para a base de conhecimento dos
+  agents.
 dependencies: []
 path: ""
 defaultUsername: ""
