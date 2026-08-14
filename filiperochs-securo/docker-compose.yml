@@ -8,7 +8,7 @@ services:
       PROXY_AUTH_ADD: "false"
 
   frontend:
-    image: ghcr.io/securo-finance/securo-frontend:latest
+    image: ghcr.io/securo-finance/securo-frontend:0.14.2@sha256:a03927fd2e6e7052f2ade35a1fc279c8d373f4407dc68533edc8334deeb55185
     restart: unless-stopped
     depends_on:
       - backend
@@ -17,7 +17,7 @@ services:
       FRONTEND_URL: http://filiperochs-securo_frontend_1:808080
 
   backend:
-    image: ghcr.io/securo-finance/securo-backend:latest
+    image: ghcr.io/securo-finance/securo-backend:0.14.2@sha256:0b4aed85fa609ea4761be73bf738e5db322dcc922b73a8949e17424f63e0f3cf
     restart: unless-stopped
     command: sh -c "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"
     depends_on:
@@ -36,7 +36,7 @@ services:
       PLUGGY_OAUTH_REDIRECT_URI: ${PLUGGY_OAUTH_REDIRECT_URI}
 
   celery-worker:
-    image: ghcr.io/securo-finance/securo-backend:latest
+    image: ghcr.io/securo-finance/securo-backend:0.14.2@sha256:0b4aed85fa609ea4761be73bf738e5db322dcc922b73a8949e17424f63e0f3cf
     restart: unless-stopped
     command: celery -A app.worker worker --loglevel=info
     depends_on:
@@ -55,7 +55,7 @@ services:
       PLUGGY_OAUTH_REDIRECT_URI: ${PLUGGY_OAUTH_REDIRECT_URI}
 
   celery-beat:
-    image: ghcr.io/securo-finance/securo-backend:latest
+    image: ghcr.io/securo-finance/securo-backend:0.14.2@sha256:0b4aed85fa609ea4761be73bf738e5db322dcc922b73a8949e17424f63e0f3cf
     restart: unless-stopped
     command: celery -A app.worker beat --loglevel=info
     depends_on:
