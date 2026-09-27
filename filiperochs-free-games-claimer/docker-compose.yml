@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  app_proxy:
+    environment:
+      APP_HOST: filiperochs-free-games-claimer_free-games-claimer_1
+      APP_PORT: 7080
+
+  free-games-claimer:
+    image: ghcr.io/p-adamiec/free-games-claimer-remaster:v1.9@sha256:28dfeaa134bd3ff52d9925b7e39523a512b8fc1d66768a3aff42dc48e87c1f1b
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    shm_size: 1gb
+    # Credentials and settings live in ${APP_DATA_DIR}/data/config.env, which the app
+    # loads on its own. On first start it is created from the upstream .env.example.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - mkdir -p /fgc/data && { [ -f /fgc/data/config.env ] || cp /fgc/.env.example /fgc/data/config.env; } && exec docker-entrypoint.sh "$$@"
+      - --
+    command: ["python3", "main.py"]
+    volumes:
+      - ${APP_DATA_DIR}/data:/fgc/data

@@ -1,0 +1,46 @@
+manifestVersion: 1
+id: filiperochs-free-games-claimer
+category: automation
+name: Free Games Claimer
+version: "1.0.0"
+icon: https://raw.githubusercontent.com/P-Adamiec/Free-Games-Claimer-Remaster/main/logo.png
+tagline: Resgata automaticamente jogos grátis da Epic, Prime Gaming, GOG, Steam e mais
+description: >-
+  Free Games Claimer Remaster é um bot que resgata automaticamente os jogos
+  grátis da Epic Games (incluindo o jogo mobile semanal), Prime Gaming, GOG,
+  Steam, Ubisoft, Fab, Unity Asset Store, além do check-in diário do
+  AliExpress e giveaways do GamerPower (itch.io, Fanatical, IndieGala).
+
+
+  Ao abrir o app você acessa o navegador do bot via noVNC, onde pode
+  acompanhar os resgates e fazer logins manuais, captchas e códigos 2FA
+  quando necessário. Os logins ficam salvos no perfil do navegador.
+
+
+  Configuração: as credenciais e opções ficam no arquivo
+  ~/umbrel/app-data/filiperochs-free-games-claimer/data/config.env, criado
+  automaticamente na primeira inicialização a partir do .env.example do
+  projeto. Edite-o (via SSH, com sudo) e reinicie o app. Principais variáveis:
+  EG_EMAIL/EG_PASSWORD, PG_EMAIL/PG_PASSWORD, GOG_EMAIL/GOG_PASSWORD,
+  STEAM_USERNAME/STEAM_PASSWORD, *_OTP_KEY para 2FA, STORES,
+  SCHEDULER_HOURS e DISCORD_WEBHOOK/NOTIFY para notificações. Defina também
+  VNC_URL=http://umbrel.local:7020 para que os links das notificações
+  apontem para o Umbrel.
+developer: P-Adamiec
+website: https://github.com/P-Adamiec/Free-Games-Claimer-Remaster
+submitter: filiperochs
+submission: https://github.com/filiperochs/filiperochs-umbrel-store
+repo: https://github.com/P-Adamiec/Free-Games-Claimer-Remaster
+support: https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/issues
+port: 7020
+gallery:
+  - https://raw.githubusercontent.com/P-Adamiec/Free-Games-Claimer-Remaster/main/logo.png
+releaseNotes: >-
+  Free Games Claimer Remaster v1.9: login com recovery codes na Epic, suporte a
+  authenticator (OTP) no GOG e itch.io, GamerPower integrado às lojas via
+  STORES, e diversas correções de login/2FA. Mais:
+  https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases/tag/v1.9
+dependencies: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
