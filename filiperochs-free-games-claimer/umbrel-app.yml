@@ -2,7 +2,7 @@ manifestVersion: 1
 id: filiperochs-free-games-claimer
 category: automation
 name: Free Games Claimer
-version: "1.0.0"
+version: "1.14.0"
 icon: https://raw.githubusercontent.com/P-Adamiec/Free-Games-Claimer-Remaster/main/logo.png
 tagline: Resgata automaticamente jogos grátis da Epic, Prime Gaming, GOG, Steam e mais
 description: >-
@@ -36,10 +36,15 @@ port: 7020
 gallery:
   - https://raw.githubusercontent.com/P-Adamiec/Free-Games-Claimer-Remaster/main/logo.png
 releaseNotes: >-
-  Free Games Claimer Remaster v1.9: login com recovery codes na Epic, suporte a
-  authenticator (OTP) no GOG e itch.io, GamerPower integrado às lojas via
-  STORES, e diversas correções de login/2FA. Mais:
-  https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases/tag/v1.9
+  Free Games Claimer Remaster v1.14: a Steam não usa mais o SteamDB — os jogos
+  grátis vêm do GamerPower e da busca da própria loja Steam
+  (STEAM_SEARCH=false deixa só o GamerPower). DLCs agora são controlados por
+  loja com STEAM_CLAIM_DLC, EG_CLAIM_DLC e MS_CLAIM_DLC, substituindo o
+  GP_CLAIM_DLC. Notificações do Discord sem preview de links
+  (DISCORD_SUPPRESS_EMBEDS=false reativa) e DEBUG_SCREENSHOTS=true para
+  enviar screenshots de falhas. GamerPower memoriza a loja de cada giveaway e
+  não confunde mais jogos de uma mesma série. Mais:
+  https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases/tag/v1.14
 dependencies: []
 path: ""
 defaultUsername: ""
