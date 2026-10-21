@@ -7,7 +7,7 @@ services:
       APP_PORT: 7080
 
   free-games-claimer:
-    image: ghcr.io/p-adamiec/free-games-claimer-remaster:v1.14@sha256:5571126e29c0a4805c6d695d4bbeb06aad70f38e1ce2df926ed5b539259c6b2a
+    image: ghcr.io/p-adamiec/free-games-claimer-remaster:v1.18@sha256:ca3a9d62fb894c4f4b03a05b0467d50144f6a084cf3a9844e4ee327fb8d604e6
     restart: unless-stopped
     tty: true
     stdin_open: true

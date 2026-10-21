@@ -2,7 +2,7 @@ manifestVersion: 1
 id: filiperochs-free-games-claimer
 category: automation
 name: Free Games Claimer
-version: "1.14.0"
+version: "1.18.0"
 icon: https://raw.githubusercontent.com/P-Adamiec/Free-Games-Claimer-Remaster/main/logo.png
 tagline: Resgata automaticamente jogos grátis da Epic, Prime Gaming, GOG, Steam e mais
 description: >-
@@ -36,15 +36,15 @@ port: 7020
 gallery:
   - https://raw.githubusercontent.com/P-Adamiec/Free-Games-Claimer-Remaster/main/logo.png
 releaseNotes: >-
-  Free Games Claimer Remaster v1.14: a Steam não usa mais o SteamDB — os jogos
-  grátis vêm do GamerPower e da busca da própria loja Steam
-  (STEAM_SEARCH=false deixa só o GamerPower). DLCs agora são controlados por
-  loja com STEAM_CLAIM_DLC, EG_CLAIM_DLC e MS_CLAIM_DLC, substituindo o
-  GP_CLAIM_DLC. Notificações do Discord sem preview de links
-  (DISCORD_SUPPRESS_EMBEDS=false reativa) e DEBUG_SCREENSHOTS=true para
-  enviar screenshots de falhas. GamerPower memoriza a loja de cada giveaway e
-  não confunde mais jogos de uma mesma série. Mais:
-  https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases/tag/v1.14
+  Free Games Claimer Remaster v1.18: a imagem passou para Debian 13 e as
+  notificações para o Apprise 2 (Telegram, Pushover e Matrix com negrito e
+  links). O check-in do AliExpress agora funciona em todos os idiomas. Desde
+  a v1.14: o Epic escolhe sua conta salva sozinho, volta a adicionar jogos à
+  biblioteca (correção do novo checkout) e visita menos as páginas dos jogos;
+  Epic e Microsoft Store tentam de novo jogos que falharam; os claims da
+  Unity funcionam em contas dos EUA; um código GOG já usado não é mais
+  reportado como resgatado; e o resumo diz por que o bot precisou de você.
+  Mais: https://github.com/P-Adamiec/Free-Games-Claimer-Remaster/releases/tag/v1.18
 dependencies: []
 path: ""
 defaultUsername: ""
