@@ -2,16 +2,10 @@ manifestVersion: 1
 id: filiperochs-n8n
 category: automation
 name: n8n
-version: "2.30.5"
+version: "2.48.6"
 icon: https://getumbrel.github.io/umbrel-apps-gallery/n8n/icon.svg
 releaseNotes: >-
-  2.30.5 (2026-07-15)
-  Bug Fixes
-  core: Count AI assistant workflow test runs as manual executions in statistics (#34153) (e8320245f)
-  core: Preserve node aliases when generating AI tool variants (#34195) (1c73884e1)
-
-  Features
-  editor: Add n8n Credits credential selection experiment (#34074) (1cb3d7548)
+  2.48.6 (2026-11-19)
 
 
   Full release notes are found at https://github.com/n8n-io/n8n/releases
