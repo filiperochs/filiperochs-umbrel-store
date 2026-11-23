@@ -3,10 +3,10 @@ version: "3.7"
 services:
   app_proxy:
     environment:
-      APP_HOST: filiperochs-ofertas-db_gateway_1
+      APP_HOST: filiperochs-ofertas-db_odb-gateway_1
       APP_PORT: 80
 
-  db:
+  odb-pg:
     image: supabase/postgres:17.6.1.136
     restart: on-failure
     volumes:
@@ -32,14 +32,14 @@ services:
       retries: 20
     command: ["postgres", "-c", "config_file=/etc/postgresql/postgresql.conf", "-c", "log_min_messages=fatal"]
 
-  rest:
+  odb-rest:
     image: postgrest/postgrest:v14.18
     restart: on-failure
     depends_on:
-      db:
+      odb-pg:
         condition: service_healthy
     environment:
-      PGRST_DB_URI: postgres://authenticator:${POSTGRES_PASSWORD}@db:5432/postgres
+      PGRST_DB_URI: postgres://authenticator:${POSTGRES_PASSWORD}@odb-pg:5432/postgres
       PGRST_DB_SCHEMAS: public
       PGRST_DB_MAX_ROWS: 5000
       PGRST_DB_ANON_ROLE: anon
@@ -48,18 +48,18 @@ services:
       PGRST_APP_SETTINGS_JWT_SECRET: ${JWT_SECRET}
       PGRST_APP_SETTINGS_JWT_EXP: ${JWT_EXPIRY}
 
-  auth:
+  odb-auth:
     image: supabase/gotrue:v2.197.0
     restart: on-failure
     depends_on:
-      db:
+      odb-pg:
         condition: service_healthy
     environment:
       GOTRUE_API_HOST: 0.0.0.0
       GOTRUE_API_PORT: 9999
       API_EXTERNAL_URL: http://umbrel.local:58101/auth/v1
       GOTRUE_DB_DRIVER: postgres
-      GOTRUE_DB_DATABASE_URL: postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@db:5432/postgres
+      GOTRUE_DB_DATABASE_URL: postgres://supabase_auth_admin:${POSTGRES_PASSWORD}@odb-pg:5432/postgres
       GOTRUE_SITE_URL: http://umbrel.local:58101
       GOTRUE_DISABLE_SIGNUP: "true"
       GOTRUE_JWT_ADMIN_ROLES: service_role
@@ -71,22 +71,22 @@ services:
       GOTRUE_MAILER_AUTOCONFIRM: "true"
       GOTRUE_EXTERNAL_PHONE_ENABLED: "false"
 
-  storage:
+  odb-storage:
     image: supabase/storage-api:v1.89.12
     restart: on-failure
     depends_on:
-      db:
+      odb-pg:
         condition: service_healthy
-      rest:
+      odb-rest:
         condition: service_started
     volumes:
       - ${APP_DATA_DIR}/data/storage:/var/lib/storage
     environment:
       ANON_KEY: ${ANON_KEY}
       SERVICE_KEY: ${SERVICE_ROLE_KEY}
-      POSTGREST_URL: http://rest:3000
+      POSTGREST_URL: http://odb-rest:3000
       AUTH_JWT_SECRET: ${JWT_SECRET}
-      DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@db:5432/postgres
+      DATABASE_URL: postgres://supabase_storage_admin:${POSTGRES_PASSWORD}@odb-pg:5432/postgres
       STORAGE_PUBLIC_URL: http://umbrel.local:58101
       REQUEST_ALLOW_X_FORWARDED_PATH: "true"
       # Limite duro por arquivo (fotos de post de grupo); o userbot tambem deve validar (ver BACKLOG)
@@ -100,13 +100,13 @@ services:
       S3_PROTOCOL_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
       S3_PROTOCOL_ACCESS_KEY_SECRET: ${S3_ACCESS_KEY_SECRET}
 
-  gateway:
+  odb-gateway:
     image: nginx:1.27-alpine
     restart: on-failure
     depends_on:
-      - rest
-      - auth
-      - storage
+      - odb-rest
+      - odb-auth
+      - odb-storage
     ports:
       - "58101:8000"
     volumes:

@@ -8,19 +8,27 @@ map $http_authorization $bearer {
 server {
     listen 8000;
     client_max_body_size 20m;
+    # DNS dinamico: reresolve a cada 10s (container reiniciado muda de IP) e usa nomes unicos
+    resolver 127.0.0.11 valid=10s ipv6=off;
 
     location /rest/v1/ {
-        proxy_pass http://rest:3000/;
+        set $up_rest http://odb-rest:3000;
+        rewrite ^/rest/v1/(.*)$ /$1 break;
+        proxy_pass $up_rest;
         proxy_set_header Authorization $bearer;
         proxy_set_header Host $host;
     }
     location /auth/v1/ {
-        proxy_pass http://auth:9999/;
+        set $up_auth http://odb-auth:9999;
+        rewrite ^/auth/v1/(.*)$ /$1 break;
+        proxy_pass $up_auth;
         proxy_set_header Host $host;
     }
     location /storage/v1/ {
         client_max_body_size 6m;
-        proxy_pass http://storage:5000/;
+        set $up_storage http://odb-storage:5000;
+        rewrite ^/storage/v1/(.*)$ /$1 break;
+        proxy_pass $up_storage;
         proxy_set_header Authorization $bearer;
         proxy_set_header Host $host;
         proxy_set_header X-Forwarded-Path /storage/v1;
