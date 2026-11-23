@@ -4,7 +4,7 @@ category: developer
 name: Ofertas DB
 icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-supabase/logo.png
 tagline: Postgres + REST + Auth + Storage compativeis com o Supabase
-version: "1.0.0"
+version: "1.0.1"
 port: 58100
 description: >-
   Versao enxuta do Supabase para o bot de ofertas: Postgres 17 (imagem oficial do Supabase),
@@ -20,6 +20,7 @@ gallery: []
 path: ""
 defaultUsername: ""
 defaultPassword: ""
-releaseNotes: ""
+releaseNotes: >-
+  1.0.1: corrige o roles.sql (role supabase_functions_admin inexistente abortava o init e impedia Storage e Auth de subir).
 submitter: Filipe Rocha
 submission: https://github.com/filiperochs/filiperochs-umbrel-store
