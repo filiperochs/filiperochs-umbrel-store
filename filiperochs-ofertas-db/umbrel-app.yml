@@ -1,0 +1,25 @@
+manifestVersion: 1
+id: filiperochs-ofertas-db
+category: developer
+name: Ofertas DB
+icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-supabase/logo.png
+tagline: Postgres + REST + Auth + Storage compativeis com o Supabase
+version: "1.0.0"
+port: 58100
+description: >-
+  Versao enxuta do Supabase para o bot de ofertas: Postgres 17 (imagem oficial do Supabase),
+  PostgREST, GoTrue e Storage API (backend em arquivo, limite de 5 MB por arquivo) atras de um gateway nginx que expoe os mesmos caminhos /rest/v1, /auth/v1 e /storage/v1 do supabase.co.
+  Sem Studio, Realtime ou Edge Functions. As chaves sao derivadas do APP_SEED do Umbrel
+  e aparecem na pagina do app (protegida pelo login do Umbrel).
+developer: Filipe Rocha
+website: https://supabase.com
+dependencies: []
+repo: https://github.com/filiperochs/filiperochs-umbrel-store
+support: https://github.com/filiperochs/filiperochs-umbrel-store/issues
+gallery: []
+path: ""
+defaultUsername: ""
+defaultPassword: ""
+releaseNotes: ""
+submitter: Filipe Rocha
+submission: https://github.com/filiperochs/filiperochs-umbrel-store
