@@ -109,11 +109,66 @@ services:
       - odb-storage
     ports:
       - "58101:8000"
-    volumes:
-      - ${APP_DATA_DIR}/nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       ANON_KEY: ${ANON_KEY}
       SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
       UMBREL_HOST_HINT: umbrel.local
-      NGINX_ENVSUBST_FILTER: "^(POSTGRES_PASSWORD|ANON_KEY|SERVICE_ROLE_KEY|UMBREL_HOST_HINT)$"
+      NGINX_ENVSUBST_FILTER: "^(POSTGRES_PASSWORD|ANON_KEY|SERVICE_ROLE_KEY|UMBREL_HOST_HINT)$$"
+    # A config do nginx fica embutida aqui: o update do Umbrel substitui o compose, mas NAO
+    # sobrescreve arquivos auxiliares ja existentes na pasta do app.
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        mkdir -p /etc/nginx/templates
+        cat > /etc/nginx/templates/default.conf.template <<'NGX'
+        # Se so veio o header apikey (sem Authorization), usa o apikey como bearer (o Kong do Supabase faz isso).
+        map $$http_authorization $$bearer {
+            default $$http_authorization;
+            ""      "Bearer $$http_apikey";
+        }
+
+        # API (publicada no host, porta 58101): mesmos caminhos do supabase.co
+        server {
+            listen 8000;
+            client_max_body_size 20m;
+            # DNS dinamico: reresolve a cada 10s (container reiniciado muda de IP) e usa nomes unicos
+            resolver 127.0.0.11 valid=10s ipv6=off;
+
+            location /rest/v1/ {
+                set $$up_rest http://odb-rest:3000;
+                rewrite ^/rest/v1/(.*)$$ /$$1 break;
+                proxy_pass $$up_rest;
+                proxy_set_header Authorization $$bearer;
+                proxy_set_header Host $$host;
+            }
+            location /auth/v1/ {
+                set $$up_auth http://odb-auth:9999;
+                rewrite ^/auth/v1/(.*)$$ /$$1 break;
+                proxy_pass $$up_auth;
+                proxy_set_header Host $$host;
+            }
+            location /storage/v1/ {
+                client_max_body_size 6m;
+                set $$up_storage http://odb-storage:5000;
+                rewrite ^/storage/v1/(.*)$$ /$$1 break;
+                proxy_pass $$up_storage;
+                proxy_set_header Authorization $$bearer;
+                proxy_set_header Host $$host;
+                proxy_set_header X-Forwarded-Path /storage/v1;
+            }
+            location = /health { return 200 "ok\n"; }
+            location / { return 404; }
+        }
+
+        # UI (atras do login do Umbrel via app_proxy): mostra URLs e chaves
+        server {
+            listen 80;
+            location / {
+                default_type text/plain;
+                return 200 "Ofertas DB (Postgres + PostgREST + GoTrue)\n\nAPI:      http://$${UMBREL_HOST_HINT}:58101\nPostgres: $${UMBREL_HOST_HINT}:54329 (user postgres, db postgres)\n\nPOSTGRES_PASSWORD=$${POSTGRES_PASSWORD}\nANON_KEY=$${ANON_KEY}\nSERVICE_ROLE_KEY=$${SERVICE_ROLE_KEY}\n";
+            }
+        }
+        NGX
+        exec /docker-entrypoint.sh nginx -g "daemon off;"
