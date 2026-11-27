@@ -7,7 +7,7 @@ name: Evolution API
 tagline: API de WhatsApp e integrações para negócios e automação
 icon: https://i.imgur.com/E7BL0Ko.png
 category: Development
-version: "2.3.7"
+version: "2.3.8"
 # Porta interna da Evolution API; deve coincidir com SERVER_PORT no docker-compose (4502)
 port: 4502
 description: >-
@@ -31,7 +31,7 @@ gallery:
   - https://i.imgur.com/Q0upAzc.png
 releaseNotes: >-
   Instalação completa com PostgreSQL e Redis.
-  Evolution API v2.3.7
+  Evolution API v2.3.8 - corrige conexão Baileys (ack de status stanzas)
 
 dependencies: []
 path: ""
