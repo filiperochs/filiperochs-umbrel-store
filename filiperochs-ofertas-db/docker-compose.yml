@@ -98,6 +98,69 @@ services:
       S3_PROTOCOL_ACCESS_KEY_ID: ${S3_ACCESS_KEY_ID}
       S3_PROTOCOL_ACCESS_KEY_SECRET: ${S3_ACCESS_KEY_SECRET}
 
+  # postgres-meta: API de schema que o Studio usa (listar/alterar tabelas, roles, RLS).
+  # Versao igual a do docker-compose oficial do Supabase (2026-11-23).
+  odb-meta:
+    image: supabase/postgres-meta:v0.100.1
+    restart: on-failure
+    init: true
+    depends_on:
+      odb-pg:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:8080/health').then((r) => {if (r.status !== 200) throw new Error(r.status)})"]
+      timeout: 5s
+      interval: 5s
+      retries: 3
+    environment:
+      PG_META_PORT: 8080
+      PG_META_DB_HOST: odb-pg
+      PG_META_DB_PORT: 5432
+      PG_META_DB_NAME: postgres
+      PG_META_DB_USER: postgres
+      PG_META_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      CRYPTO_KEY: ${PG_META_CRYPTO_KEY}
+
+  # Supabase Studio: editor de tabelas, editor de SQL, roles e politicas RLS.
+  # Fica atras do login do Umbrel (gateway porta 80, location /). Sem Realtime/Edge Functions/Logs
+  # neste stack: essas telas do Studio mostram erro, o resto funciona.
+  odb-studio:
+    image: supabase/studio:2026.11.23-sha-4a73166
+    restart: on-failure
+    init: true
+    depends_on:
+      odb-meta:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/api/platform/profile').then((r) => {if (r.status !== 200) throw new Error(r.status)})"]
+      timeout: 10s
+      interval: 10s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - ${APP_DATA_DIR}/data/snippets:/app/snippets
+    environment:
+      HOSTNAME: "0.0.0.0"
+      STUDIO_PG_META_URL: http://odb-meta:8080
+      POSTGRES_HOST: odb-pg
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER_READ_WRITE: postgres
+      PG_META_CRYPTO_KEY: ${PG_META_CRYPTO_KEY}
+      PGRST_DB_SCHEMAS: public
+      PGRST_DB_MAX_ROWS: 5000
+      PGRST_DB_EXTRA_SEARCH_PATH: public
+      DEFAULT_ORGANIZATION_NAME: Ofertas do Kapitao
+      DEFAULT_PROJECT_NAME: Ofertas DB
+      SUPABASE_URL: http://odb-gateway:8000
+      SUPABASE_PUBLIC_URL: http://umbrel.local:58101
+      SUPABASE_ANON_KEY: ${ANON_KEY}
+      SUPABASE_SERVICE_KEY: ${SERVICE_ROLE_KEY}
+      AUTH_JWT_SECRET: ${JWT_SECRET}
+      ENABLED_FEATURES_LOGS_ALL: "false"
+      SNIPPETS_MANAGEMENT_FOLDER: /app/snippets
+
   odb-gateway:
     image: nginx:1.27-alpine
     restart: on-failure
@@ -105,6 +168,7 @@ services:
       - odb-rest
       - odb-auth
       - odb-storage
+      - odb-studio
     ports:
       - "58101:8000"
     environment:
@@ -160,12 +224,30 @@ services:
             location / { return 404; }
         }
 
-        # UI (atras do login do Umbrel via app_proxy): mostra URLs e chaves
+        # Upgrade de WebSocket para o Studio
+        map $$http_upgrade $$connection_upgrade {
+            default upgrade;
+            ""      close;
+        }
+
+        # UI (atras do login do Umbrel via app_proxy): Studio em / e URLs/chaves em /keys
         server {
             listen 80;
-            location / {
+            resolver 127.0.0.11 valid=10s ipv6=off;
+
+            location = /keys {
                 default_type text/plain;
-                return 200 "Ofertas DB (Postgres + PostgREST + GoTrue)\n\nAPI:      http://$${UMBREL_HOST_HINT}:58101\n          (de dentro de containers use o IP do Umbrel, ex. http://192.168.x.x:58101; umbrel.local nao resolve la)\nPostgres: somente rede interna do app (sem porta publicada no host)\n\nPOSTGRES_PASSWORD=$${POSTGRES_PASSWORD}\nANON_KEY=$${ANON_KEY}\nSERVICE_ROLE_KEY=$${SERVICE_ROLE_KEY}\n";
+                return 200 "Ofertas DB (Postgres + PostgREST + GoTrue + Storage + Studio)\n\nStudio:   abra a raiz deste app (/)\nAPI:      http://$${UMBREL_HOST_HINT}:58101\n          (de dentro de containers use o IP do Umbrel, ex. http://192.168.x.x:58101; umbrel.local nao resolve la)\nPostgres: somente rede interna do app (sem porta publicada no host)\n\nPOSTGRES_PASSWORD=$${POSTGRES_PASSWORD}\nANON_KEY=$${ANON_KEY}\nSERVICE_ROLE_KEY=$${SERVICE_ROLE_KEY}\n";
+            }
+            location / {
+                set $$up_studio http://odb-studio:3000;
+                proxy_pass $$up_studio;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $$http_upgrade;
+                proxy_set_header Connection $$connection_upgrade;
+                proxy_set_header Host $$host;
+                proxy_set_header X-Forwarded-For $$proxy_add_x_forwarded_for;
+                proxy_read_timeout 300s;
             }
         }
         NGX

@@ -4,13 +4,14 @@ category: developer
 name: Ofertas DB
 icon: https://raw.githubusercontent.com/dennysubke/dennys-umbrel-app-gallery/main/denny-supabase/logo.png
 tagline: Postgres + REST + Auth + Storage compativeis com o Supabase
-version: "1.0.4"
+version: "1.1.0"
 port: 58100
 description: >-
   Versao enxuta do Supabase para o bot de ofertas: Postgres 17 (imagem oficial do Supabase),
   PostgREST, GoTrue e Storage API (backend em arquivo, limite de 5 MB por arquivo) atras de um gateway nginx que expoe os mesmos caminhos /rest/v1, /auth/v1 e /storage/v1 do supabase.co.
-  Sem Studio, Realtime ou Edge Functions. As chaves sao derivadas do APP_SEED do Umbrel
-  e aparecem na pagina do app (protegida pelo login do Umbrel).
+  Inclui o Supabase Studio (editor de tabelas e de SQL) na raiz do app, atras do login do Umbrel.
+  Sem Realtime ou Edge Functions. As chaves sao derivadas do APP_SEED do Umbrel
+  e aparecem em /keys (protegida pelo login do Umbrel).
 developer: Filipe Rocha
 website: https://supabase.com
 dependencies: []
@@ -21,6 +22,8 @@ path: ""
 defaultUsername: ""
 defaultPassword: ""
 releaseNotes: >-
+  1.1.0: adiciona o Supabase Studio (supabase/studio 2026.11.23 + postgres-meta v0.100.1) na raiz do app; a pagina de chaves passa para /keys.
+
   1.0.4: Postgres deixa de publicar a porta 54329 no host (so a API em 58101 fica exposta).
 
   1.0.3: config do nginx embutida no docker-compose (updates do Umbrel nao sobrescrevem arquivos auxiliares).
