@@ -20,3 +20,4 @@ export JWT_EXPIRY=3600
 export S3_ACCESS_KEY_ID="$(_derive s3id | cut -c1-32)"
 export S3_ACCESS_KEY_SECRET="$(_derive s3secret)"
 export PG_META_CRYPTO_KEY="$(_derive pgmeta)"
+export MCP_TOKEN="$(_derive mcp)"

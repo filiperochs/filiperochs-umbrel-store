@@ -175,8 +175,9 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       ANON_KEY: ${ANON_KEY}
       SERVICE_ROLE_KEY: ${SERVICE_ROLE_KEY}
+      MCP_TOKEN: ${MCP_TOKEN}
       UMBREL_HOST_HINT: umbrel.local
-      NGINX_ENVSUBST_FILTER: "^(POSTGRES_PASSWORD|ANON_KEY|SERVICE_ROLE_KEY|UMBREL_HOST_HINT)$$"
+      NGINX_ENVSUBST_FILTER: "^(POSTGRES_PASSWORD|ANON_KEY|SERVICE_ROLE_KEY|MCP_TOKEN|UMBREL_HOST_HINT)$$"
     # A config do nginx fica embutida aqui: o update do Umbrel substitui o compose, mas NAO
     # sobrescreve arquivos auxiliares ja existentes na pasta do app.
     entrypoint:
@@ -220,6 +221,24 @@ services:
                 proxy_set_header Host $$host;
                 proxy_set_header X-Forwarded-Path /storage/v1;
             }
+            # MCP oficial do Supabase (servido pelo Studio em /api/mcp). NAO tem auth propria e da
+            # controle total do banco: so aceita LAN/Tailscale E exige o token (Bearer MCP_TOKEN).
+            location /mcp {
+                allow 127.0.0.1;
+                allow 192.168.0.0/16;
+                allow 100.64.0.0/10;
+                deny all;
+                if ($$http_authorization != "Bearer $${MCP_TOKEN}") { return 401; }
+                set $$up_mcp http://odb-studio:3000;
+                rewrite ^/mcp/?(.*)$$ /api/mcp/$$1 break;
+                proxy_pass $$up_mcp;
+                proxy_http_version 1.1;
+                proxy_set_header Authorization "";
+                proxy_set_header Host $$host;
+                proxy_set_header X-Forwarded-Prefix /mcp;
+                proxy_buffering off;
+                proxy_read_timeout 3600s;
+            }
             location = /health { return 200 "ok\n"; }
             location / { return 404; }
         }
@@ -237,7 +256,7 @@ services:
 
             location = /keys {
                 default_type text/plain;
-                return 200 "Ofertas DB (Postgres + PostgREST + GoTrue + Storage + Studio)\n\nStudio:   abra a raiz deste app (/)\nAPI:      http://$${UMBREL_HOST_HINT}:58101\n          (de dentro de containers use o IP do Umbrel, ex. http://192.168.x.x:58101; umbrel.local nao resolve la)\nPostgres: somente rede interna do app (sem porta publicada no host)\n\nPOSTGRES_PASSWORD=$${POSTGRES_PASSWORD}\nANON_KEY=$${ANON_KEY}\nSERVICE_ROLE_KEY=$${SERVICE_ROLE_KEY}\n";
+                return 200 "Ofertas DB (Postgres + PostgREST + GoTrue + Storage + Studio)\n\nStudio:   abra a raiz deste app (/)\nAPI:      http://$${UMBREL_HOST_HINT}:58101\n          (de dentro de containers use o IP do Umbrel, ex. http://192.168.x.x:58101; umbrel.local nao resolve la)\nPostgres: somente rede interna do app (sem porta publicada no host)\n\nPOSTGRES_PASSWORD=$${POSTGRES_PASSWORD}\nANON_KEY=$${ANON_KEY}\nSERVICE_ROLE_KEY=$${SERVICE_ROLE_KEY}\nMCP_TOKEN=$${MCP_TOKEN}\n\nMCP: http://$${UMBREL_HOST_HINT}:58101/mcp  (header Authorization: Bearer <MCP_TOKEN>; so LAN/Tailscale)\n";
             }
             location / {
                 set $$up_studio http://odb-studio:3000;
